@@ -1,1 +1,35 @@
 # res03-php-j7
+
+- res03-php-j7
+    - models
+        - User.php
+    - logic
+        - router.php
+        - database.php
+    - pages
+        - homepage.php
+        - login.php
+        - register.php
+        - account.php
+    - templates
+        - partials
+            - _header.phtml
+            - _footer.phtml
+        - login
+            - login.phtml
+            - _login-form.phtml
+        - register
+            - register.phtml
+            - _register-form.phtml
+        - account
+            - account.phtml
+        - homepage
+            - homepage.phtml
+        - layout.phtml 
+    - assets
+        - js
+        - styles
+            - scss
+            - css
+        - images
+    - index.php
