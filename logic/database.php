@@ -6,7 +6,7 @@ function loadUser(string $email){
         "vincentollivier",
         "98f74e8350a6f9da22f312f5162d2994"
     );
-    $query = $db->prepare('SELECT * FROM `users` WHERE email=:value');
+    $query = $db->prepare('SELECT * FROM users WHERE email=:value');
     $parameters = ['value' => $email];
     $query->execute($parameters);
     $loadedUser = $query->fetch(PDO::FETCH_ASSOC);
@@ -21,15 +21,18 @@ function saveUser(User $user){
     );
     $query = $db->prepare('INSERT INTO users VALUES (null, :value1, :value2, :value3, :value4)');
     $parameters = [
-    'value1' => $user->getFirst_name(),
-    'value2' => $user->getLast_name(),
+    'value1' => $user->getFirstName(),
+    'value2' => $user->getLastName(),
     'value3' => $user->getEmail(),
     'value4' => $user->getPassword()
     ];
     $query->execute($parameters);
-    // $userAdded = $query->fetch(PDO::FETCH_ASSOC);
-    // var_dump ($userAdded);
     
+    $query = $db->prepare('SELECT * FROM `users` WHERE email=:value');
+    $parameters = ['value' => $user->getEmail()];
+    $query->execute($parameters);
+    $loadedUser = $query->fetch(PDO::FETCH_ASSOC);
+    var_dump ($loadedUser);
 }
 
 loadUser("ollivier@mail.com");
