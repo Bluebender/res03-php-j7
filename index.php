@@ -1,14 +1,8 @@
 <?php
 
+session_start();
+
 require "logic/router.php";
-
-if (isset ($_GET["route"])){
-    checkRoute($_GET["route"]);
-}
-else{
-    checkRoute("");
-}
-
 require "logic/database.php";
 // require "models/User.php";
 
@@ -25,8 +19,8 @@ if (isset ($_POST["firstName"]) && !empty($_POST["firstName"]) && isset ($_POST[
     $newUser["firstName"] = $_POST["firstName"];
     $newUser["lastName"] = $_POST["lastName"];
     $newUser["email"] = $_POST["email"];
-        
     $newUser["password"] = $_POST["password"];
+
     $userToSave = new User($newUser["firstName"], $newUser["lastName"], $newUser["email"], $newUser["password"]);
     saveUser($userToSave);
 }
@@ -38,11 +32,25 @@ if (isset ($_POST["loginEmail"]) && !empty($_POST["loginEmail"]) && isset ($_POS
     $loginPassword = $_POST["loginPassword"];
     $userToConnect = loadUser($loginEmail);
     if (password_verify($loginPassword, $userToConnect->getPassword())){
-        echo "GAGNE";
+        $_GET["route"] = "mon-compte";
+        
+        $_SESSION["passwordValid"]=true;
+        $_SESSION["sessionId"]=$userToConnect->getId();
+        
+        var_dump ($_SESSION);
     }
     else{
-        echo "recommence";
+        echo "Le mot de passe n'est pas correct";
     }
-    
 }
+
+
+
+if (isset ($_GET["route"])){
+    checkRoute($_GET["route"]);
+}
+else{
+    checkRoute("");
+}
+
 ?>

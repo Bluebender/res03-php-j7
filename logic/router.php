@@ -9,7 +9,12 @@ function checkRoute(string $route) : void
         require "pages/register.php";
     }
     else if ($route === "mon-compte"){
-        require "pages/account.php";
+        if (isset ($_SESSION["passwordValid"]) && $_SESSION["passwordValid"]===true){
+            require "pages/account.php";
+        }
+        else{
+            echo "Votre session n'est pas valide";
+        }
     }
     else{
         require "pages/homepage.php";
