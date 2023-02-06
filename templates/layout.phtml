@@ -12,9 +12,18 @@
 
 <body>
     <?php
-    require _header.phtml;
-    require "$template".".phtml";
-    require _footer.phtml;
+    require "partials/_header.phtml";
+    
+    // require "homepage/homepage.phtml";
+    // require "register/register.phtml";
+    // require "login/login.phtml";
+    // require "account/account.phtml";
+    
+
+    
+    require $template."/".$template.".phtml";
+
+    require "partials/_footer.phtml";
     ?>    
 </body>
 </html>
