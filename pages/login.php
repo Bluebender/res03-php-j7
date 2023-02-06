@@ -1,6 +1,6 @@
 <?php
 
 $template = "login";
-require layout.phtml
+require "templates/layout.phtml";
 
 ?>

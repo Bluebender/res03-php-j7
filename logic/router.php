@@ -6,10 +6,10 @@ function checkRoute(string $route) : void
         require "pages/login.php";
     }
     else if ($route === "creer-un-compte"){
-        require "pages/account.php";
+        require "pages/register.php";
     }
     else if ($route === "mon-compte"){
-        require "pages/homepage.php";
+        require "pages/account.php";
     }
     else{
         require "pages/homepage.php";

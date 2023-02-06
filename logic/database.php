@@ -1,6 +1,8 @@
 <?php
+require "models/User.php";
 
-function loadUser(string $email){
+
+function loadUser(string $email) : ?User {
     $db = new PDO(
         "mysql:host=db.3wa.io;port=3306;dbname=vincentollivier_phpj7",
         "vincentollivier",
@@ -10,10 +12,14 @@ function loadUser(string $email){
     $parameters = ['value' => $email];
     $query->execute($parameters);
     $loadedUser = $query->fetch(PDO::FETCH_ASSOC);
-    var_dump ($loadedUser);
+    
+    $loadedUserObject = new User ($loadedUser["firstName"], $loadedUser["lastName"], $loadedUser["email"], $loadedUser["password"]);
+    $loadedUserObject->setId($loadedUser["id"]);
+    
+    return $loadedUserObject;
 }
 
-function saveUser(User $user){
+function saveUser(User $user) : User {
     $db = new PDO(
         "mysql:host=db.3wa.io;port=3306;dbname=vincentollivier_phpj7",
         "vincentollivier",
@@ -24,21 +30,14 @@ function saveUser(User $user){
     'value1' => $user->getFirstName(),
     'value2' => $user->getLastName(),
     'value3' => $user->getEmail(),
-    'value4' => $user->getPassword()
+    'value4' => password_hash($user->getPassword(), PASSWORD_DEFAULT)
     ];
     $query->execute($parameters);
     
-    $query = $db->prepare('SELECT * FROM `users` WHERE email=:value');
-    $parameters = ['value' => $user->getEmail()];
-    $query->execute($parameters);
-    $loadedUser = $query->fetch(PDO::FETCH_ASSOC);
-    var_dump ($loadedUser);
+    return loadUser($user->getEmail());
+
 }
 
-loadUser("ollivier@mail.com");
-require "../models/User.php";
-$userToSave = new User("Kiki", "Gerard", "to@mail.com", 122);
-var_dump ($userToSave);
-saveUser($userToSave);
+
 
 ?>
